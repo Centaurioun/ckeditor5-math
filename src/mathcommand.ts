@@ -6,7 +6,7 @@ export default class MathCommand extends Command {
 	public override execute(
 		equation: string,
 		display?: boolean,
-		outputType: 'script' | 'span' = 'script',
+		outputType: 'script' | 'span' = 'span',
 		forceOutputType?: boolean
 	): void {
 		const model = this.editor.model;
