@@ -22,8 +22,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - name: Install CKEditor 49 dependency graph
-        run: npm install --ignore-scripts --no-audit --no-fund --package-lock=false
+      - name: Install exactly locked CKEditor 49 dependency graph
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Typecheck
         run: npm run typecheck
       - name: Bundle plugin with real CKEditor imports
