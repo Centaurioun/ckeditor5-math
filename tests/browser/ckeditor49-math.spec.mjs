@@ -17,7 +17,7 @@ test('inline and display math survive editor serialization with KaTeX', async ({
   const results = await page.evaluate(() => {
     const editor = window.editor;
     editor.execute('math', String.raw`E=mc^2`, false, 'span', true);
-    editor.execute('math', String.raw`\\frac{a+b}{c}`, true, 'span', true);
+    editor.execute('math', String.raw`\frac{a+b}{c}`, true, 'span', true);
     const first = editor.getData();
     editor.setData(first);
     const second = editor.getData();
