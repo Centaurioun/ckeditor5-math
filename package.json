@@ -16,7 +16,10 @@
   "devDependencies": {
     "ckeditor5": "49.0.1",
     "typescript": "5.9.3",
-    "esbuild": "0.25.12"
+    "esbuild": "0.25.12",
+    "@playwright/test": "1.64.1",
+    "vite": "8.3.5",
+    "katex": "0.19.1"
   },
   "engines": {
     "node": ">=22",
@@ -39,7 +42,9 @@
     "typecheck": "tsc --noEmit -p tsconfig.release.json",
     "build": "tsc -p tsconfig.release.json",
     "build:smoke": "esbuild src/index.ts --bundle --format=esm --platform=browser --target=es2023 --loader:.svg=text --loader:.css=css --outdir=tmp/bundle --log-level=warning",
-    "test": "npm run typecheck && npm run build:smoke"
+    "test": "npm run typecheck && npm run build:smoke",
+    "dev:sample": "vite --host 127.0.0.1 --port 4179 --strictPort",
+    "test:browser": "playwright test --config playwright.config.mjs"
   },
   "private": true,
   "peerDependencies": {

@@ -1,5 +1,8 @@
 import { ClassicEditor, Essentials, Autoformat, BlockQuote, Bold, Heading, Image, ImageCaption, ImageStyle, ImageToolbar, ImageUpload, Base64UploadAdapter, Indent, Italic, Link, List, MediaEmbed, Paragraph, Table, TableToolbar, CodeBlock, Code } from 'ckeditor5';
 import 'ckeditor5/ckeditor5.css';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+window.katex = katex;
 import '../theme/mathform.css';
 
 import { Math, AutoformatMath } from '../src/index';

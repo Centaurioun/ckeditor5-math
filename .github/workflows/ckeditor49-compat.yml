@@ -30,6 +30,12 @@ jobs:
         run: npm run build:smoke
       - name: Build TypeScript declarations
         run: npm run build
+      - name: Install Chromium for functional smoke (Node 22)
+        if: matrix.node == '22'
+        run: npx playwright install --with-deps chromium
+      - name: Run real editor browser smoke (Node 22)
+        if: matrix.node == '22'
+        run: npm run test:browser
       - name: Guard against legacy CKEditor import paths
         run: |
           if grep -RE "(ckeditor5/src/|@ckeditor/ckeditor5-[a-z-]+/src/)" src --include='*.ts'; then
