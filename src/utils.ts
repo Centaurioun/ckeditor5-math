@@ -8,7 +8,7 @@ import { CKEditorError, global, type PositioningFunction } from 'ckeditor5';
 import type { KatexOptions, MathJax2, MathJax3 } from './typings-external';
 
 export function getSelectedMathModelWidget(
-	selection: DocumentSelection
+	selection: ModelDocumentSelection
 ): null | CKElement {
 	const selectedElement = selection.getSelectedElement();
 

@@ -1,4 +1,4 @@
-import { Plugin } from 'ckeditor5';
+import { Plugin, Autoformat } from 'ckeditor5';
 import { global, logWarning } from 'ckeditor5';
 import { blockAutoformatEditing } from 'ckeditor5';
 import Math from './math';
@@ -7,7 +7,7 @@ import MathUI from './mathui';
 
 export default class AutoformatMath extends Plugin {
 	public static get requires() {
-		return [ Math, 'Autoformat' ] as const;
+		return [ Math, Autoformat ] as const;
 	}
 
 	/**
@@ -45,8 +45,8 @@ export default class AutoformatMath extends Plugin {
 				);
 			};
 
-			blockAutoformatEditing( editor, this, /^\$\$$/, callback );
-			blockAutoformatEditing( editor, this, /^\\\[$/, callback );
+			blockAutoformatEditing( editor, editor.plugins.get( Autoformat ), /^\$\$$/, callback );
+			blockAutoformatEditing( editor, editor.plugins.get( Autoformat ), /^\\\[$/, callback );
 		}
 	}
 
