@@ -1,7 +1,6 @@
-import { Plugin } from 'ckeditor5/src/core';
-import { global, logWarning } from 'ckeditor5/src/utils';
-// eslint-disable-next-line ckeditor5-rules/allow-imports-only-from-main-package-entry-point
-import blockAutoformatEditing from '@ckeditor/ckeditor5-autoformat/src/blockautoformatediting';
+import { Plugin } from 'ckeditor5';
+import { global, logWarning } from 'ckeditor5';
+import blockAutoformatEditing from 'ckeditor5';
 import Math from './math';
 import MathCommand from './mathcommand';
 import MathUI from './mathui';
@@ -46,9 +45,7 @@ export default class AutoformatMath extends Plugin {
 				);
 			};
 
-			// @ts-expect-error: blockAutoformatEditing expects an Autoformat instance even though it works with any Plugin instance
 			blockAutoformatEditing( editor, this, /^\$\$$/, callback );
-			// @ts-expect-error: blockAutoformatEditing expects an Autoformat instance even though it works with any Plugin instance
 			blockAutoformatEditing( editor, this, /^\\\[$/, callback );
 		}
 	}

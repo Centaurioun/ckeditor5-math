@@ -1,14 +1,14 @@
 import MathEditing from './mathediting';
 import MainFormView from './ui/mainformview';
 import mathIcon from '../theme/icons/math.svg';
-import { Plugin } from 'ckeditor5/src/core';
-import { ClickObserver } from 'ckeditor5/src/engine';
+import { Plugin } from 'ckeditor5';
+import { ClickObserver } from 'ckeditor5';
 import {
 	ButtonView,
 	ContextualBalloon,
 	clickOutsideHandler
-} from 'ckeditor5/src/ui';
-import { CKEditorError, global, uid } from 'ckeditor5/src/utils';
+} from 'ckeditor5';
+import { CKEditorError, global, uid } from 'ckeditor5';
 import { getBalloonPositionData } from './utils';
 import MathCommand from './mathcommand';
 
