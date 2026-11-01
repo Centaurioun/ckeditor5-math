@@ -22,11 +22,12 @@ const checkIcon = IconCheck;
 const cancelIcon = IconCancel;
 
 class MathInputView extends LabeledFieldView<InputTextView> {
-	public value: null | string = null;
+	public declare value: null | string;
 	public isReadOnly = false;
 
 	constructor( locale: Locale ) {
 		super( locale, createLabeledInputText );
+		this.set( 'value', null );
 	}
 }
 
