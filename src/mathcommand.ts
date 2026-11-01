@@ -1,4 +1,4 @@
-import { Command } from 'ckeditor5';
+import { Command, type Editor } from 'ckeditor5';
 import { getSelectedMathModelWidget } from './utils';
 
 export default class MathCommand extends Command {
@@ -43,7 +43,12 @@ export default class MathCommand extends Command {
 		} );
 	}
 
-	public display = false;
+	public declare display: boolean;
+
+	constructor( editor: Editor ) {
+		super( editor );
+		this.set( 'display', false );
+	}
 
 	public override refresh(): void {
 		const model = this.editor.model;
