@@ -4,8 +4,8 @@ import { renderEquation } from '../utils';
 import type { Locale } from 'ckeditor5';
 
 export default class MathView extends View {
-	public value: string;
-	public display: boolean;
+	declare public value: string;
+	declare public display: boolean;
 	public previewUid: string;
 	public previewClassName: Array<string>;
 	public katexRenderOptions: KatexOptions;
