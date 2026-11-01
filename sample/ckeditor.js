@@ -92,5 +92,6 @@ ClassicEditor
 		window.console.log( 'CKEditor 5 is ready.', editor );
 	} )
 	.catch( err => {
+		window.mathEditorError = String( err?.stack || err );
 		window.console.error( err.stack );
 	} );

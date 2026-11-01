@@ -4,7 +4,7 @@ test('CKEditor 49 starts and registers our open-source math toolbar', async ({ p
   const pageErrors = [];
   page.on('pageerror', e => pageErrors.push(e.message));
   await page.goto('/sample/index.html');
-  await expect.poll(() => page.evaluate(() => Boolean(window.editor))).toBe(true);
+  await expect.poll(() => page.evaluate(() => typeof window.editor?.execute === 'function')).toBe(true);
   await expect(page.getByRole('button', { name: /Insert math/i })).toBeVisible();
   expect(pageErrors).toEqual([]);
 });
@@ -13,7 +13,7 @@ test('inline and display math survive editor serialization with KaTeX', async ({
   const pageErrors = [];
   page.on('pageerror', e => pageErrors.push(e.message));
   await page.goto('/sample/index.html');
-  await expect.poll(() => page.evaluate(() => Boolean(window.editor))).toBe(true);
+  await expect.poll(() => page.evaluate(() => typeof window.editor?.execute === 'function')).toBe(true);
   const results = await page.evaluate(() => {
     const editor = window.editor;
     editor.execute('math', String.raw`E=mc^2`, false, 'span', true);
