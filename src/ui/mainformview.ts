@@ -1,4 +1,4 @@
-import { icons } from 'ckeditor5';
+import { IconCheck, IconCancel } from 'ckeditor5';
 import {
 	ButtonView,
 	createLabeledInputText,
@@ -18,7 +18,8 @@ import MathView from './mathview';
 import '../../theme/mathform.css';
 import type { KatexOptions } from '../typings-external';
 
-const { check: checkIcon, cancel: cancelIcon } = icons;
+const checkIcon = IconCheck;
+const cancelIcon = IconCancel;
 
 class MathInputView extends LabeledFieldView<InputTextView> {
 	public value: null | string = null;

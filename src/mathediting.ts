@@ -6,7 +6,7 @@ import {
 	viewToModelPositionOutsideModelElement
 } from 'ckeditor5';
 import { renderEquation, extractDelimiters } from './utils';
-import type { DowncastWriter, Element } from 'ckeditor5';
+import type { ViewDowncastWriter as DowncastWriter, ModelElement as Element } from 'ckeditor5';
 import { CKEditorError, uid } from 'ckeditor5';
 
 export default class MathEditing extends Plugin {
@@ -233,7 +233,7 @@ export default class MathEditing extends Plugin {
 			const uiElement = writer.createUIElement(
 				'div',
 				null,
-				function( domDocument ) {
+				function( this: { toDomElement: ( doc: Document ) => HTMLElement }, domDocument: Document ) {
 					const domElement = this.toDomElement( domDocument );
 
 					void renderEquation(

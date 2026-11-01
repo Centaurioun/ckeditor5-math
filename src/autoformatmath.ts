@@ -1,6 +1,6 @@
 import { Plugin } from 'ckeditor5';
 import { global, logWarning } from 'ckeditor5';
-import blockAutoformatEditing from 'ckeditor5';
+import { blockAutoformatEditing } from 'ckeditor5';
 import Math from './math';
 import MathCommand from './mathcommand';
 import MathUI from './mathui';

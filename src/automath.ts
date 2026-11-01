@@ -1,6 +1,6 @@
 import { Clipboard } from 'ckeditor5';
 import { Plugin, type Editor } from 'ckeditor5';
-import { LivePosition, LiveRange } from 'ckeditor5';
+import { ModelLivePosition as LivePosition, ModelLiveRange as LiveRange } from 'ckeditor5';
 import { Undo } from 'ckeditor5';
 import { global } from 'ckeditor5';
 import { extractDelimiters, hasDelimiters, delimitersCounts } from './utils';
