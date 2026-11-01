@@ -1,0 +1,38 @@
+# TEMPORARY, BRANCH-ONLY BOOTSTRAP: removes itself after package-lock generation.
+name: Bootstrap CKEditor 49 npm lockfile
+on:
+  push:
+    branches:
+      - 'upgrade/ckeditor5-49-compat-ci-20261101'
+permissions:
+  contents: read
+jobs:
+  generate-locked-dependencies:
+    if: github.repository == 'Centaurioun/ckeditor5-math'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.4'
+      - name: Generate exact npm dependency lock, no install scripts
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Commit only package-lock on upgrade branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "upgrade/ckeditor5-49-compat-ci-20261101"
+          git add -- package-lock.json
+          if git diff --cached --quiet; then
+            echo 'No lockfile change'; exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'build: pin CKEditor 49 npm dependency tree'
+          git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
