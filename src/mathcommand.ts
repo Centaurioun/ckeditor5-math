@@ -2,7 +2,7 @@ import { Command, type Editor } from 'ckeditor5';
 import { getSelectedMathModelWidget } from './utils';
 
 export default class MathCommand extends Command {
-	public override value: string | null = null;
+	public declare value: string | null;
 	public override execute(
 		equation: string,
 		display?: boolean,
