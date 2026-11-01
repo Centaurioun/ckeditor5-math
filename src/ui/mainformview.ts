@@ -1,4 +1,4 @@
-import { icons } from 'ckeditor5/src/core';
+import { IconCheck, IconCancel } from 'ckeditor5';
 import {
 	ButtonView,
 	createLabeledInputText,
@@ -11,21 +11,23 @@ import {
 	ViewCollection,
 	type InputTextView,
 	type FocusableView
-} from 'ckeditor5/src/ui';
-import { Locale, FocusTracker, KeystrokeHandler } from 'ckeditor5/src/utils';
+} from 'ckeditor5';
+import { Locale, FocusTracker, KeystrokeHandler } from 'ckeditor5';
 import { extractDelimiters, hasDelimiters } from '../utils';
 import MathView from './mathview';
 import '../../theme/mathform.css';
 import type { KatexOptions } from '../typings-external';
 
-const { check: checkIcon, cancel: cancelIcon } = icons;
+const checkIcon = IconCheck;
+const cancelIcon = IconCancel;
 
 class MathInputView extends LabeledFieldView<InputTextView> {
-	public value: null | string = null;
+	public declare value: null | string;
 	public isReadOnly = false;
 
 	constructor( locale: Locale ) {
 		super( locale, createLabeledInputText );
+		this.set( 'value', null );
 	}
 }
 

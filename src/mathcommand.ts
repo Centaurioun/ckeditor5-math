@@ -1,12 +1,12 @@
-import { Command } from 'ckeditor5/src/core';
+import { Command, type Editor } from 'ckeditor5';
 import { getSelectedMathModelWidget } from './utils';
 
 export default class MathCommand extends Command {
-	public override value: string | null = null;
+	public declare value: string | null;
 	public override execute(
 		equation: string,
 		display?: boolean,
-		outputType: 'script' | 'span' = 'script',
+		outputType: 'script' | 'span' = 'span',
 		forceOutputType?: boolean
 	): void {
 		const model = this.editor.model;
@@ -43,7 +43,12 @@ export default class MathCommand extends Command {
 		} );
 	}
 
-	public display = false;
+	public declare display: boolean;
+
+	constructor( editor: Editor ) {
+		super( editor );
+		this.set( 'display', false );
+	}
 
 	public override refresh(): void {
 		const model = this.editor.model;

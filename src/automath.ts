@@ -1,13 +1,13 @@
-import { Clipboard } from 'ckeditor5/src/clipboard';
-import { Plugin, type Editor } from 'ckeditor5/src/core';
-import { LivePosition, LiveRange } from 'ckeditor5/src/engine';
-import { Undo } from 'ckeditor5/src/undo';
-import { global } from 'ckeditor5/src/utils';
+import { ClipboardPipeline } from 'ckeditor5';
+import { Plugin, type Editor } from 'ckeditor5';
+import { ModelLivePosition as LivePosition, ModelLiveRange as LiveRange } from 'ckeditor5';
+import { Undo } from 'ckeditor5';
+import { global } from 'ckeditor5';
 import { extractDelimiters, hasDelimiters, delimitersCounts } from './utils';
 
 export default class AutoMath extends Plugin {
 	public static get requires() {
-		return [ Clipboard, Undo ] as const;
+		return [ ClipboardPipeline, Undo ] as const;
 	}
 
 	public static get pluginName() {
@@ -29,31 +29,24 @@ export default class AutoMath extends Plugin {
 		const editor = this.editor;
 		const modelDocument = editor.model.document;
 
-		this.listenTo( editor.plugins.get( Clipboard ), 'inputTransformation', () => {
-			const firstRange = modelDocument.selection.getFirstRange();
-			if ( !firstRange ) {
+		// CKEditor 49 exposes the inserted model range on ClipboardPipeline's
+		// contentInsertion event. Listening after the default low-priority insertion
+		// avoids inferring the pasted range from the pre-paste selection (which can
+		// be collapsed, replaced, or moved while the clipboard pipeline runs).
+		this.listenTo( editor.plugins.get( ClipboardPipeline ), 'contentInsertion', ( _event, data ) => {
+			if ( data.method !== 'paste' || !data.resultRange ) {
 				return;
 			}
 
-			const leftLivePosition = LivePosition.fromPosition( firstRange.start );
+			const leftLivePosition = LivePosition.fromPosition( data.resultRange.start );
 			leftLivePosition.stickiness = 'toPrevious';
-
-			const rightLivePosition = LivePosition.fromPosition( firstRange.end );
+			const rightLivePosition = LivePosition.fromPosition( data.resultRange.end );
 			rightLivePosition.stickiness = 'toNext';
 
-			modelDocument.once( 'change:data', () => {
-				this._mathBetweenPositions(
-					leftLivePosition,
-					rightLivePosition
-				);
-
-				leftLivePosition.detach();
-				rightLivePosition.detach();
-			},
-			{ priority: 'high' }
-			);
-		}
-		);
+			this._mathBetweenPositions( leftLivePosition, rightLivePosition );
+			leftLivePosition.detach();
+			rightLivePosition.detach();
+		}, { priority: 'lowest' } );
 
 		editor.commands.get( 'undo' )?.on( 'execute', () => {
 			if ( this._timeoutId ) {

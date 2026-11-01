@@ -1,25 +1,27 @@
 {
   "compilerOptions": {
+    "target": "ES2023",
     "lib": [
-      "DOM"
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
     ],
-    "noImplicitAny": true,
-    "noImplicitOverride": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "strict": true,
-    "module": "es6",
-    "target": "es2020",
-    "sourceMap": true,
-    "allowJs": true,
-    "moduleResolution": "node",
-    "typeRoots": [
-      "typings",
-      "node_modules/@types"
-    ]
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "include": [
-    "./sample",
-    "./src",
-    "./tests",
-    "./typings"
+    "src/**/*.ts",
+    "typings/**/*.d.ts"
+  ],
+  "exclude": [
+    "sample",
+    "tests",
+    "node_modules",
+    "tmp"
   ]
 }

@@ -1,14 +1,14 @@
-import type { Editor } from 'ckeditor5/src/core';
+import type { Editor } from 'ckeditor5';
 import type {
-	Element as CKElement,
-	DocumentSelection
-} from 'ckeditor5/src/engine';
-import { BalloonPanelView } from 'ckeditor5/src/ui';
-import { CKEditorError, type PositioningFunction } from 'ckeditor5/src/utils';
+	ModelElement as CKElement,
+	ModelDocumentSelection
+} from 'ckeditor5';
+import { BalloonPanelView } from 'ckeditor5';
+import { CKEditorError, global, type PositioningFunction } from 'ckeditor5';
 import type { KatexOptions, MathJax2, MathJax3 } from './typings-external';
 
 export function getSelectedMathModelWidget(
-	selection: DocumentSelection
+	selection: ModelDocumentSelection
 ): null | CKElement {
 	const selectedElement = selection.getSelectedElement();
 
@@ -140,7 +140,9 @@ export async function renderEquation(
 					katex.render( equation, el, {
 						throwOnError: false,
 						displayMode: display,
-						...katexRenderOptions
+						...katexRenderOptions,
+						trust: false,
+						maxExpand: 1000
 					} );
 				}
 				if ( preview ) {
@@ -155,7 +157,7 @@ export async function renderEquation(
 		if ( lazyLoad != null ) {
 			try {
 				global.window.CKEDITOR_MATH_LAZY_LOAD ??= lazyLoad();
-				element.innerHTML = equation;
+				element.textContent = equation;
 				await global.window.CKEDITOR_MATH_LAZY_LOAD;
 				await renderEquation(
 					equation,
@@ -169,13 +171,13 @@ export async function renderEquation(
 					katexRenderOptions
 				);
 			} catch ( err ) {
-				element.innerHTML = equation;
+				element.textContent = equation;
 				console.error(
 					`math-tex-typesetting-lazy-load-failed: Lazy load failed: ${ String( err ) }`
 				);
 			}
 		} else {
-			element.innerHTML = equation;
+			element.textContent = equation;
 			console.warn(
 				`math-tex-typesetting-missing: Missing the mathematical typesetting engine (${ String( engine ) }) for tex.`
 			);

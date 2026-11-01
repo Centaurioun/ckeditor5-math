@@ -1,13 +1,13 @@
 import MathCommand from './mathcommand';
-import { type Editor, Plugin } from 'ckeditor5/src/core';
+import { type Editor, Plugin } from 'ckeditor5';
 import {
 	toWidget,
 	Widget,
 	viewToModelPositionOutsideModelElement
-} from 'ckeditor5/src/widget';
+} from 'ckeditor5';
 import { renderEquation, extractDelimiters } from './utils';
-import type { DowncastWriter, Element } from 'ckeditor5/src/engine';
-import { CKEditorError, uid } from 'ckeditor5/src/utils';
+import type { ViewDowncastWriter as DowncastWriter, ModelElement as Element } from 'ckeditor5';
+import { CKEditorError, uid } from 'ckeditor5';
 
 export default class MathEditing extends Plugin {
 	public static get requires() {
@@ -21,8 +21,8 @@ export default class MathEditing extends Plugin {
 	constructor( editor: Editor ) {
 		super( editor );
 		editor.config.define( 'math', {
-			engine: 'mathjax',
-			outputType: 'script',
+			engine: 'katex',
+			outputType: 'span',
 			className: 'math-tex',
 			forceOutputType: false,
 			enablePreview: true,
@@ -233,7 +233,7 @@ export default class MathEditing extends Plugin {
 			const uiElement = writer.createUIElement(
 				'div',
 				null,
-				function( domDocument ) {
+				function( this: { toDomElement: ( doc: Document ) => HTMLElement }, domDocument: Document ) {
 					const domElement = this.toDomElement( domDocument );
 
 					void renderEquation(
